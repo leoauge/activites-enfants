@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activités 2026/2027 — Nino &amp; Ariane</title>
+<style>
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    background:#efece6;
+    color:#2b2b2b;
+    line-height:1.5;
+  }
+
+  /* Tab bar */
+  .tabbar{
+    position:sticky;
+    top:0;
+    z-index:20;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    padding:14px 16px;
+    background:#ffffff;
+    border-bottom:1px solid #ddd;
+    box-shadow:0 1px 4px rgba(0,0,0,0.06);
+  }
+  .tabbar button{
+    padding:10px 30px;
+    border-radius:999px;
+    border:none;
+    font-weight:700;
+    font-size:1rem;
+    cursor:pointer;
+    background:#eee;
+    color:#555;
+    transition:background 0.15s, color 0.15s;
+  }
+  .tabbar button:hover{opacity:0.9;}
+  .tabbar button.active-nino{background:#2f6f5e; color:#fff;}
+  .tabbar button.active-ariane{background:#a34b74; color:#fff;}
+
+  /* Child panels — each defines its own color palette via CSS variables */
+  .child-panel{display:none;}
+  .child-panel.active{display:block;}
+
+  .panel-nino{
+    --bg:#faf7f2;
+    --card:#ffffff;
+    --ink:#2b2b2b;
+    --muted:#6b6b6b;
+    --accent:#2f6f5e;
+    --accent-light:#e4f0ec;
+    --grad1:#2f6f5e;
+    --grad2:#244f43;
+    --sport:#3d6fa8;
+    --sport-bg:#e7eefa;
+    --art:#a8543d;
+    --art-bg:#faeee7;
+    --border:#e6e0d6;
+    --warn-bg:#fff6e0;
+    --warn-border:#e8cf7a;
+    background:var(--bg);
+  }
+
+  .panel-ariane{
+    --bg:#faf6f8;
+    --card:#ffffff;
+    --ink:#2b2b2b;
+    --muted:#6b6b6b;
+    --accent:#a34b74;
+    --accent-light:#f6e6ee;
+    --grad1:#a34b74;
+    --grad2:#7a3557;
+    --sport:#3d6fa8;
+    --sport-bg:#e7eefa;
+    --art:#a8543d;
+    --art-bg:#faeee7;
+    --border:#e9e0e5;
+    --warn-bg:#fff6e0;
+    --warn-border:#e8cf7a;
+    background:var(--bg);
+  }
+
+  header.page{
+    background:linear-gradient(135deg, var(--grad1) 0%, var(--grad2) 100%);
+    color:#fff;
+    padding:36px 24px 28px;
+    text-align:center;
+  }
+  header.page h1{
+    margin:0 0 6px;
+    font-size:1.8rem;
+    letter-spacing:0.5px;
+  }
+  header.page p{
+    margin:4px 0;
+    font-size:0.95rem;
+    opacity:0.92;
+  }
+  .badge-age{
+    display:inline-block;
+    margin-top:10px;
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.4);
+    border-radius:999px;
+    padding:4px 16px;
+    font-size:0.9rem;
+  }
+  main{
+    max-width:960px;
+    margin:0 auto;
+    padding:28px 20px 0;
+  }
+  .legend{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin:-10px auto 26px;
+    font-size:0.82rem;
+    color:var(--muted);
+  }
+  .legend span{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+  .dot.sport{background:var(--sport);}
+  .dot.art{background:var(--art);}
+
+  .zone{margin-bottom:34px;}
+  .zone-header{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    border-bottom:2px solid var(--accent);
+    padding-bottom:6px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .zone-header h2{
+    margin:0;
+    font-size:1.25rem;
+    color:var(--accent);
+  }
+  .zone-dist{
+    font-size:0.85rem;
+    color:var(--muted);
+    background:var(--accent-light);
+    padding:3px 10px;
+    border-radius:999px;
+  }
+  .cards{display:flex; flex-direction:column; gap:12px;}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:5px solid var(--sport);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .card.art{border-left-color:var(--art);}
+  .card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .card-title{font-weight:600; font-size:1.02rem;}
+  .tag{
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.4px;
+    font-weight:700;
+    padding:2px 9px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .tag.sport{color:var(--sport);background:var(--sport-bg);}
+  .tag.art{color:var(--art);background:var(--art-bg);}
+  .day{font-weight:700; color:var(--accent); font-size:0.9rem; margin-top:2px;}
+  .structure{color:var(--muted); font-size:0.88rem; margin-top:2px;}
+  .details{
+    margin-top:8px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 16px;
+    font-size:0.86rem;
+  }
+  .details > div{flex:1 1 200px; min-width:200px;}
+  .details div span.label{
+    color:var(--muted);
+    display:block;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.3px;
+  }
+  .note{
+    margin-top:8px;
+    font-size:0.8rem;
+    color:#8a6d1c;
+    background:var(--warn-bg);
+    border:1px solid var(--warn-border);
+    border-radius:6px;
+    padding:6px 10px;
+  }
+  .caveats{
+    background:var(--warn-bg);
+    border:1px solid var(--warn-border);
+    border-radius:10px;
+    padding:18px 20px;
+    margin-top:10px;
+    font-size:0.9rem;
+  }
+  .caveats h2{margin-top:0; font-size:1.1rem; color:#8a6d1c;}
+  .caveats ul{margin:8px 0 0; padding-left:20px;}
+  .caveats li{margin-bottom:6px;}
+  footer{
+    text-align:center;
+    color:#8a8a8a;
+    font-size:0.8rem;
+    padding:24px 20px 40px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="tabbar">
+    <button id="btn-nino" class="active-nino" onclick="showChild('nino')">Nino</button>
+    <button id="btn-ariane" onclick="showChild('ariane')">Ariane</button>
+  </div>
+
+  <!-- ============ NINO ============ -->
+  <div class="child-panel panel-nino active" id="panel-nino">
+
+    <header class="page">
+      <h1>Activités extra-scolaires — Nino</h1>
+      <p>Rentrée scolaire 2026/2027 · Domicile : 102 avenue de Gravelle, Saint-Maurice (94410)</p>
+      <span class="badge-age">Né en 2020 → 6 ans à la rentrée (CP)</span>
+    </header>
+
+    <main>
+
+      <div class="legend">
+        <span><i class="dot sport"></i> Sport</span>
+        <span><i class="dot art"></i> Art / Musique / Danse</span>
+      </div>
+
+      <!-- SAINT-MAURICE -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Saint-Maurice (94410)</h2>
+          <span class="zone-dist">Domicile — moins de 5 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">École municipale des sports — groupe "Multi 6-8 ans"</div>
+                <div class="structure">Ville de Saint-Maurice, Service municipal des sports</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Mercredi 10h–11h (jeux de ballons) puis 11h–12h (multisports)</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Gymnase du Verseau, 30bis rue du Maréchal Leclerc</div>
+              <div><span class="label">Tarif</span>205,60 €/an (1 activité, Mauritien) · 243,30 € (hors commune)</div>
+              <div><span class="label">Inscription</span>Salle des familles, 1er–13 sept. (dates saison 2025-26 ; à reconfirmer)</div>
+              <div><span class="label">Contact</span>01 45 18 82 62</div>
+            </div>
+          </div>
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">École municipale des sports — Gymnastique (Multi 6-8 ans)</div>
+                <div class="structure">Ville de Saint-Maurice, Service municipal des sports</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Mercredi 14h30–15h30</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Salle Louis Jouvet, Saint-Maurice</div>
+              <div><span class="label">Tarif</span>205,60 € / 243,30 € (idem)</div>
+              <div><span class="label">Inscription</span>idem ci-dessus</div>
+            </div>
+          </div>
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">École municipale des sports — Multisports + Multi ballons</div>
+                <div class="structure">Ville de Saint-Maurice, Service municipal des sports</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Samedi 10h30–11h30 puis 11h30–12h30</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Salle Louis Jouvet, Saint-Maurice</div>
+              <div><span class="label">Tarif</span>205,60 € / 243,30 € (idem)</div>
+              <div><span class="label">Inscription</span>idem ci-dessus</div>
+            </div>
+          </div>
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Éveil musical / 1er instrument</div>
+                <div class="structure">Conservatoire municipal Olivier Messiaen</div>
+              </div>
+              <span class="tag art">Art / Musique</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Âge requis</span>Dès 4 ans</div>
+              <div><span class="label">Lieu</span>30bis rue du Maréchal Leclerc, Saint-Maurice</div>
+              <div><span class="label">Contact</span>01 45 18 81 59 · conservatoire@ville-saint-maurice.fr</div>
+            </div>
+            <div class="note">Planning et tarifs non détaillés en ligne — à demander au secrétariat.</div>
+          </div>
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Judo (Petits Samouraïs / Poussins)</div>
+                <div class="structure">Judo Team Saint-Maurice</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Âge requis</span>Accessible dès 4 ans (tranches par année de naissance à reconfirmer pour 2026-2027)</div>
+              <div><span class="label">Lieu</span>9 avenue de la Villa Antony, Saint-Maurice</div>
+              <div><span class="label">Contact</span>judoteam.saint-maurice@gmail.com · 06 34 36 84 75</div>
+            </div>
+            <div class="note">Planning 2026-2027 pas encore publié en ligne.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VINCENNES -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Vincennes (94300)</h2>
+          <span class="zone-dist">~10 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Initiation danses (6 ans - CP)</div>
+                <div class="structure">Conservatoire de Vincennes</div>
+              </div>
+              <span class="tag art">Art / Danse</span>
+            </div>
+            <div class="day">Jour précis non communiqué (cours 1h/semaine)</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>8 avenue Pierre Brossolette, 94300 Vincennes</div>
+              <div><span class="label">Tarif</span>Non communiqué (quotient familial ; tarif hors commune à confirmer)</div>
+              <div><span class="label">Rentrée</span>Reprise des cours lundi 7 septembre 2026</div>
+              <div><span class="label">Contact</span>01 43 98 68 68 · llakhdhar@vincennes.fr</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SAINT-MANDÉ -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Saint-Mandé (94160)</h2>
+          <span class="zone-dist">~10 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Judo — groupe CP/CE1</div>
+                <div class="structure">La Saint Mandéenne (association omnisports)</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Mardi 17h–18h (ou jeudi 17h–18h, ou samedi 10h–11h)</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Salle Omnisport, Saint-Mandé</div>
+              <div><span class="label">Tarif</span>283 €/an (Saint-Mandéens) · 313 € (extérieurs)</div>
+              <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
+            </div>
+          </div>
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">École de nage — grand bain, groupe CP</div>
+                <div class="structure">La Saint Mandéenne</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Mardi 17h–17h45</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Centre Sportif, Saint-Mandé</div>
+              <div><span class="label">Tarif</span>297 €/an (Saint-Mandéens, 45 min) · 327 € (extérieurs)</div>
+              <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
+            </div>
+          </div>
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Danse Modern Jazz — groupe CP</div>
+                <div class="structure">La Saint Mandéenne</div>
+              </div>
+              <span class="tag art">Art / Danse</span>
+            </div>
+            <div class="day">Vendredi 17h–18h</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Centre Sportif, Saint-Mandé</div>
+              <div><span class="label">Tarif</span>283 €/an (Saint-Mandéens) · 313 € (extérieurs)</div>
+              <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
+            </div>
+          </div>
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Musique — Initiation 1 (dès 6 ans)</div>
+                <div class="structure">Conservatoire Robert-Lamoureux</div>
+              </div>
+              <span class="tag art">Art / Musique</span>
+            </div>
+            <div class="day">Jour à confirmer (créneaux lun/mar/jeu/ven 14h-22h, mer 9h-22h, sam 9h-17h)</div>
+            <div class="details">
+              <div><span class="label">Contact</span>info-conservatoire@mairie-saint-mande.fr · 01 41 74 03 02</div>
+            </div>
+            <div class="note">Réunion d'information obligatoire pour les nouvelles inscriptions (fin juin). Tarifs non communiqués pour 2026-2027.</div>
+          </div>
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Danse — Éveil 2 (6 ans)</div>
+                <div class="structure">Conservatoire Robert-Lamoureux</div>
+              </div>
+              <span class="tag art">Art / Danse</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Contact</span>info-conservatoire@mairie-saint-mande.fr</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- BOIS DE VINCENNES -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Bois de Vincennes</h2>
+          <span class="zone-dist">~10-15 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Poney Club — groupe 6-11 ans</div>
+                <div class="structure">Centre équestre Bayard, UCPA Vincennes</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Créneaux hebdomadaires lun/mar/jeu/ven 16h-19h (jour précis à réserver)</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Avenue du Polygone, Bois de Vincennes</div>
+              <div><span class="label">Tarif</span>227 €/trimestre (cours + stages)</div>
+              <div><span class="label">Inscription</span>ucpa.com</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CHARENTON-LE-PONT -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Charenton-le-Pont (94220)</h2>
+          <span class="zone-dist">~10-12 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">École de natation enfants (dès 5 ans)</div>
+                <div class="structure">CNMC — Cercle Nageurs Marne Charenton</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>113 rue de Paris, Charenton-le-Pont (piscine municipale)</div>
+              <div><span class="label">Contact</span>cnmc.fr</div>
+            </div>
+            <div class="note">Horaires et tarifs 2026-2027 non publiés en ligne.</div>
+          </div>
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Cursus musique (éveil → 1er cycle)</div>
+                <div class="structure">Conservatoire André Navarra</div>
+              </div>
+              <span class="tag art">Art / Musique</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>3 place des Marseillais, Charenton-le-Pont</div>
+              <div><span class="label">Inscription</span>Dossiers à déposer au secrétariat (1 allée des Tilleuls) à partir du 1er juin 2026, avant le 26 juin 2026</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PARIS 12E -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Paris 12e</h2>
+          <span class="zone-dist">~15 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Musique / Danse / Théâtre</div>
+                <div class="structure">Conservatoire municipal Paul Dukas</div>
+              </div>
+              <span class="tag art">Art / Musique / Danse</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>51 rue Jorge Semprun, 75012 Paris</div>
+              <div><span class="label">Inscription</span>Débutants : 26 mai – 11 juin 2026 · Non-débutants : 16 juin – 10 juil. 2026</div>
+              <div><span class="label">Contact</span>01 43 47 17 66</div>
+            </div>
+          </div>
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Centres d'animation du 12e (sport, danse, activités diverses)</div>
+                <div class="structure">Mairie du 12e arrondissement</div>
+              </div>
+              <span class="tag sport">Sport / Art</span>
+            </div>
+            <div class="day">Selon centre — non exploré en détail</div>
+            <div class="details">
+              <div><span class="label">Ressource</span>quefaire.paris.fr · claje.asso.fr</div>
+            </div>
+            <div class="note">Piste identifiée mais non détaillée faute de temps — plusieurs centres d'animation dans le 12e proposent des activités dès 2 ans, tarification solidaire selon quotient familial.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SAINT-MAUR-DES-FOSSÉS -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Saint-Maur-des-Fossés (94100)</h2>
+          <span class="zone-dist">~20 min — au-delà du périmètre cible</span>
+        </div>
+        <div class="cards">
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Natation + multisports (forfait E.P.I.S.)</div>
+                <div class="structure">VGA Saint-Maur (Club omnisports)</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Formules mercredi/samedi, mercredi/dimanche ou samedi/dimanche</div>
+            <div class="details">
+              <div><span class="label">Âge requis</span>Savoir-nager dès 5 ans révolus en septembre</div>
+              <div><span class="label">Lieu</span>8 avenue du Nord, Saint-Maur-des-Fossés</div>
+              <div><span class="label">Inscription</span>Ouverture le 28/05/2026 ; début natation le 7/09/2026, stade le 5/09/2026</div>
+              <div><span class="label">Contact</span>01 41 81 03 19 · secretariat@vgasportsdeau.org</div>
+            </div>
+            <div class="note">Commune plus éloignée que le périmètre initial (~20 min) — à envisager seulement si les options plus proches ne conviennent pas.</div>
+          </div>
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Danse classique / jazz / contemporaine</div>
+                <div class="structure">Conservatoire à Rayonnement Régional de Saint-Maur-des-Fossés</div>
+              </div>
+              <span class="tag art">Art / Danse</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Contact</span>01 48 83 14 67</div>
+            </div>
+            <div class="note">~20 min de trajet — hors périmètre cible, tarifs non confirmés.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="caveats">
+        <h2>Points de vigilance</h2>
+        <ul>
+          <li>L'âge de Nino (6 ans à la rentrée 2026) est calculé à partir de l'année de naissance uniquement (2020) — la date de naissance précise n'était pas disponible, à vérifier pour les tranches d'âge exactes (ex. judo, natation).</li>
+          <li>Le planning de l'école municipale des sports de Saint-Maurice provient du Guide des sports <strong>2025-2026</strong> (seul document disponible en ligne). Les créneaux sont historiquement stables d'une année sur l'autre, mais les dates d'inscription 2026-2027 n'étaient pas encore publiées.</li>
+          <li>Plusieurs structures (conservatoires de Saint-Maurice, Charenton, Saint-Maur, Judo Team, CNMC, centres d'animation Paris 12e) ne publient pas leur planning détaillé en ligne — un contact direct est nécessaire.</li>
+          <li>Les tarifs "hors commune" de Vincennes et les tarifs des conservatoires de Saint-Maur-des-Fossés n'ont pas pu être confirmés.</li>
+          <li>Recherche non exhaustive sur les centres d'animation du 12e arrondissement (offre large mais non détaillée faute de temps).</li>
+        </ul>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============ ARIANE ============ -->
+  <div class="child-panel panel-ariane" id="panel-ariane">
+
+    <header class="page">
+      <h1>Activités extra-scolaires — Ariane</h1>
+      <p>Rentrée scolaire 2026/2027 · Domicile : 102 avenue de Gravelle, Saint-Maurice (94410)</p>
+      <span class="badge-age">Née en 2022 → 4 ans à la rentrée (moyenne section)</span>
+    </header>
+
+    <main>
+
+      <div class="legend">
+        <span><i class="dot sport"></i> Sport</span>
+        <span><i class="dot art"></i> Art / Musique / Danse</span>
+      </div>
+
+      <!-- SAINT-MAURICE -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Saint-Maurice (94410)</h2>
+          <span class="zone-dist">Domicile — moins de 5 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">École municipale des sports — groupe "Éveil 3-5 ans"</div>
+                <div class="structure">Ville de Saint-Maurice, Service municipal des sports</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Mercredi 9h–10h — Éveil moteur / jeux athlétiques</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Gymnase du Verseau, 30bis rue du Maréchal Leclerc</div>
+              <div><span class="label">Tarif</span>205,60 €/an (1 activité, Mauritien) · 243,30 € (hors commune)</div>
+              <div><span class="label">Inscription</span>Salle des familles, 1er–13 sept. (dates saison 2025-26 ; à reconfirmer)</div>
+              <div><span class="label">Contact</span>01 45 18 82 62</div>
+            </div>
+          </div>
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">École municipale des sports — Éveil moteur (alternative)</div>
+                <div class="structure">Ville de Saint-Maurice, Service municipal des sports</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Mercredi 13h30–14h30</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Salle Louis Jouvet, Saint-Maurice</div>
+              <div><span class="label">Tarif</span>205,60 € / 243,30 € (idem)</div>
+            </div>
+          </div>
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">École municipale des sports — Éveil moteur (samedi)</div>
+                <div class="structure">Ville de Saint-Maurice, Service municipal des sports</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Samedi 9h30–10h30</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Salle Louis Jouvet, Saint-Maurice</div>
+              <div><span class="label">Tarif</span>205,60 € / 243,30 € (idem)</div>
+            </div>
+          </div>
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Éveil musical</div>
+                <div class="structure">Conservatoire municipal Olivier Messiaen</div>
+              </div>
+              <span class="tag art">Art / Musique</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Âge requis</span>Dès 4 ans — Ariane est éligible</div>
+              <div><span class="label">Lieu</span>30bis rue du Maréchal Leclerc, Saint-Maurice</div>
+              <div><span class="label">Contact</span>01 45 18 81 59 · conservatoire@ville-saint-maurice.fr</div>
+            </div>
+            <div class="note">Planning et tarifs non détaillés en ligne — à demander au secrétariat.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VINCENNES -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Vincennes (94300)</h2>
+          <span class="zone-dist">~10 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Éveil commun Musique et Danse — Éveil 1 (4 ans)</div>
+                <div class="structure">Conservatoire de Vincennes</div>
+              </div>
+              <span class="tag art">Art / Musique &amp; Danse</span>
+            </div>
+            <div class="day">Mercredi 9h15–10h (45 min) — ou mardi 17h15-18h, ou jeudi 17h-17h45</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>8 avenue Pierre Brossolette, 94300 Vincennes</div>
+              <div><span class="label">Tarif</span>Non communiqué (quotient familial ; tarif hors commune à confirmer)</div>
+              <div><span class="label">Rentrée</span>Reprise des cours lundi 7 septembre 2026</div>
+              <div><span class="label">Contact</span>01 43 98 68 68 · llakhdhar@vincennes.fr</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SAINT-MANDÉ -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Saint-Mandé (94160)</h2>
+          <span class="zone-dist">~10 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Baby Jazz — Maternelle moyenne section</div>
+                <div class="structure">La Saint Mandéenne (association omnisports)</div>
+              </div>
+              <span class="tag art">Art / Danse</span>
+            </div>
+            <div class="day">Mercredi 17h–17h45 (ou lundi 17h-17h45, Salle Jean Bertaud)</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Centre Sportif, Saint-Mandé</div>
+              <div><span class="label">Tarif</span>245 €/an (Saint-Mandéens) · 275 € (extérieurs)</div>
+              <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
+            </div>
+          </div>
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Baby Judo — Maternelle moyenne section</div>
+                <div class="structure">La Saint Mandéenne</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Mercredi 16h–17h</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Salle Omnisport, Saint-Mandé</div>
+              <div><span class="label">Tarif</span>245 €/an (Saint-Mandéens) · 275 € (extérieurs)</div>
+              <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
+            </div>
+          </div>
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Conservatoire Robert-Lamoureux — musique/danse</div>
+                <div class="structure">Ville de Saint-Mandé</div>
+              </div>
+              <span class="tag art">Art / Musique &amp; Danse</span>
+            </div>
+            <div class="day">—</div>
+            <div class="details">
+              <div><span class="label">Âge requis</span>Éveil musique dès 5 ans, éveil danse dès 5 ans — Ariane (4 ans) pas encore éligible en 2026-2027</div>
+            </div>
+            <div class="note">À revoir pour la rentrée 2027-2028, quand Ariane aura 5 ans.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- BOIS DE VINCENNES -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Bois de Vincennes</h2>
+          <span class="zone-dist">~10-15 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Baby Poney — groupe 3-6 ans</div>
+                <div class="structure">Centre équestre Bayard, UCPA Vincennes</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Créneaux hebdomadaires lun/mar/jeu/ven 16h-19h (jour précis à réserver)</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>Avenue du Polygone, Bois de Vincennes</div>
+              <div><span class="label">Tarif</span>176 €/trimestre</div>
+              <div><span class="label">Inscription</span>ucpa.com</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CHARENTON-LE-PONT -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Charenton-le-Pont (94220)</h2>
+          <span class="zone-dist">~10-12 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Jardin aquatique (+ de 4 ans)</div>
+                <div class="structure">CNMC — Cercle Nageurs Marne Charenton</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>113 rue de Paris, Charenton-le-Pont (piscine municipale)</div>
+              <div><span class="label">Contact</span>cnmc.fr</div>
+            </div>
+            <div class="note">Horaires et tarifs 2026-2027 non publiés en ligne.</div>
+          </div>
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Éveil musical (petite section et +)</div>
+                <div class="structure">Conservatoire André Navarra</div>
+              </div>
+              <span class="tag art">Art / Musique</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>3 place des Marseillais, Charenton-le-Pont</div>
+              <div><span class="label">Inscription</span>Dossiers à déposer au secrétariat (1 allée des Tilleuls) à partir du 1er juin 2026, avant le 26 juin 2026</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PARIS 12E -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Paris 12e</h2>
+          <span class="zone-dist">~15 min</span>
+        </div>
+        <div class="cards">
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Éveil musique / danse / théâtre</div>
+                <div class="structure">Conservatoire municipal Paul Dukas</div>
+              </div>
+              <span class="tag art">Art / Musique / Danse</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>51 rue Jorge Semprun, 75012 Paris</div>
+              <div><span class="label">Inscription</span>Débutants : 26 mai – 11 juin 2026</div>
+              <div><span class="label">Contact</span>01 43 47 17 66</div>
+            </div>
+            <div class="note">Âge minimum pour l'éveil non confirmé — à vérifier si Ariane (4 ans) est éligible.</div>
+          </div>
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Centres d'animation du 12e (activités dès 2 ans)</div>
+                <div class="structure">Mairie du 12e arrondissement</div>
+              </div>
+              <span class="tag sport">Sport / Art</span>
+            </div>
+            <div class="day">Selon centre — non exploré en détail</div>
+            <div class="details">
+              <div><span class="label">Ressource</span>quefaire.paris.fr · claje.asso.fr</div>
+            </div>
+            <div class="note">Piste identifiée mais non détaillée faute de temps — tarification solidaire selon quotient familial.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SAINT-MAUR-DES-FOSSÉS -->
+      <section class="zone">
+        <div class="zone-header">
+          <h2>Saint-Maur-des-Fossés (94100)</h2>
+          <span class="zone-dist">~20 min — au-delà du périmètre cible</span>
+        </div>
+        <div class="cards">
+
+          <div class="card sport">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Jardin aquatique (4 ans révolus en septembre)</div>
+                <div class="structure">VGA Saint-Maur — section E.P.I.S.</div>
+              </div>
+              <span class="tag sport">Sport</span>
+            </div>
+            <div class="day">Formules mercredi/samedi, mercredi/dimanche ou samedi/dimanche</div>
+            <div class="details">
+              <div><span class="label">Lieu</span>8 avenue du Nord, Saint-Maur-des-Fossés</div>
+              <div><span class="label">Inscription</span>Ouverture le 28/05/2026 ; début natation le 7/09/2026</div>
+              <div><span class="label">Contact</span>01 41 81 03 19 · secretariat@vgasportsdeau.org</div>
+            </div>
+            <div class="note">Commune plus éloignée que le périmètre initial (~20 min) — à envisager seulement si les options plus proches ne conviennent pas.</div>
+          </div>
+
+          <div class="card art">
+            <div class="card-top">
+              <div>
+                <div class="card-title">Éveil musical (dès 4 ans)</div>
+                <div class="structure">Conservatoire à Rayonnement Régional de Saint-Maur-des-Fossés</div>
+              </div>
+              <span class="tag art">Art / Musique</span>
+            </div>
+            <div class="day">Jour à confirmer</div>
+            <div class="details">
+              <div><span class="label">Contact</span>01 48 83 14 67</div>
+            </div>
+            <div class="note">~20 min de trajet — hors périmètre cible, tarifs non confirmés.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="caveats">
+        <h2>Points de vigilance</h2>
+        <ul>
+          <li>L'âge d'Ariane (4 ans à la rentrée 2026) est calculé à partir de l'année de naissance uniquement (2022) — la date de naissance précise n'était pas disponible, à vérifier pour les tranches d'âge exactes.</li>
+          <li>Le planning de l'école municipale des sports de Saint-Maurice provient du Guide des sports <strong>2025-2026</strong> (seul document disponible en ligne). Les créneaux sont historiquement stables d'une année sur l'autre, mais les dates d'inscription 2026-2027 n'étaient pas encore publiées.</li>
+          <li>Le conservatoire de Saint-Mandé n'accepte les enfants qu'à partir de 5 ans pour la musique et la danse — Ariane devra attendre la rentrée 2027-2028 pour cette structure.</li>
+          <li>Plusieurs structures (conservatoires de Saint-Maurice, Charenton, Saint-Maur, CNMC, centres d'animation Paris 12e) ne publient pas leur planning détaillé en ligne — un contact direct est nécessaire.</li>
+          <li>Les tarifs "hors commune" de Vincennes et les tarifs des conservatoires de Saint-Maur-des-Fossés n'ont pas pu être confirmés.</li>
+          <li>Recherche non exhaustive sur les centres d'animation du 12e arrondissement (offre large mais non détaillée faute de temps).</li>
+        </ul>
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    Recherche réalisée le 17 juillet 2026 · À relancer avant chaque rentrée (juin-juillet)
+  </footer>
+
+<script>
+  function showChild(who){
+    document.getElementById('panel-nino').classList.toggle('active', who === 'nino');
+    document.getElementById('panel-ariane').classList.toggle('active', who === 'ariane');
+    document.getElementById('btn-nino').classList.toggle('active-nino', who === 'nino');
+    document.getElementById('btn-ariane').classList.toggle('active-ariane', who === 'ariane');
+  }
+</script>
+
+</body>
+</html>
