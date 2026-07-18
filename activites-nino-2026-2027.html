@@ -14,8 +14,10 @@
     --accent-light:#e4f0ec;
     --sport:#3d6fa8;
     --sport-bg:#e7eefa;
-    --art:#a8543d;
-    --art-bg:#faeee7;
+    --musique:#8a4fb8;
+    --musique-bg:#f1e7fa;
+    --arts:#c07a2e;
+    --arts-bg:#faf0e3;
     --border:#e6e0d6;
     --warn-bg:#fff6e0;
     --warn-border:#e8cf7a;
@@ -79,7 +81,8 @@
   }
   .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
   .dot.sport{background:var(--sport);}
-  .dot.art{background:var(--art);}
+  .dot.musique{background:var(--musique);}
+  .dot.arts{background:var(--arts);}
 
   .zone{
     margin-bottom:34px;
@@ -123,7 +126,8 @@
   }
   .zone-header{break-after:avoid; page-break-after:avoid;}
   .caveats{break-inside:avoid; page-break-inside:avoid;}
-  .card.art{border-left-color:var(--art);}
+  .card.musique{border-left-color:var(--musique);}
+  .card.arts{border-left-color:var(--arts);}
   .card-top{
     display:flex;
     justify-content:space-between;
@@ -145,7 +149,8 @@
     white-space:nowrap;
   }
   .tag.sport{color:var(--sport);background:var(--sport-bg);}
-  .tag.art{color:var(--art);background:var(--art-bg);}
+  .tag.musique{color:var(--musique);background:var(--musique-bg);}
+  .tag.arts{color:var(--arts);background:var(--arts-bg);}
   .day{
     font-weight:700;
     color:var(--accent);
@@ -206,6 +211,31 @@
     margin-top:36px;
     padding:0 20px;
   }
+  .filters{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin:-10px auto 26px;
+    font-size:0.85rem;
+  }
+  .filters label{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:5px 12px 5px 8px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .filters input[type="checkbox"]{
+    accent-color:var(--accent);
+    width:14px;
+    height:14px;
+    cursor:pointer;
+  }
 </style>
 </head>
 <body>
@@ -218,9 +248,10 @@
 
 <main>
 
-  <div class="legend">
-    <span><i class="dot sport"></i> Sport</span>
-    <span><i class="dot art"></i> Art / Musique / Danse</span>
+  <div class="filters">
+    <label><input type="checkbox" class="filter-cb" data-cat="sport" checked onchange="applyFilters(this.closest('.child-panel')||document)"> <i class="dot sport"></i> Sport</label>
+    <label><input type="checkbox" class="filter-cb" data-cat="musique" checked onchange="applyFilters(this.closest('.child-panel')||document)"> <i class="dot musique"></i> Musique</label>
+    <label><input type="checkbox" class="filter-cb" data-cat="arts" checked onchange="applyFilters(this.closest('.child-panel')||document)"> <i class="dot arts"></i> Arts plastiques</label>
   </div>
 
   <!-- SAINT-MAURICE -->
@@ -231,7 +262,7 @@
     </div>
     <div class="cards">
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
             <div class="card-title">École municipale des sports — groupe "Multi 6-8 ans"</div>
@@ -248,7 +279,7 @@
         </div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
             <div class="card-title">École municipale des sports — Gymnastique (Multi 6-8 ans)</div>
@@ -264,7 +295,7 @@
         </div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
             <div class="card-title">École municipale des sports — Multisports + Multi ballons</div>
@@ -280,13 +311,13 @@
         </div>
       </div>
 
-      <div class="card art">
+      <div class="card musique" data-cat="musique">
         <div class="card-top">
           <div>
             <div class="card-title">Éveil musical / 1er instrument</div>
             <div class="structure">Conservatoire municipal Olivier Messiaen</div>
           </div>
-          <span class="tag art">Art / Musique</span>
+          <span class="tag musique">Art / Musique</span>
         </div>
         <div class="day">Jour à confirmer</div>
         <div class="details">
@@ -297,7 +328,7 @@
         <div class="note">Planning et tarifs non détaillés en ligne — à demander au secrétariat.</div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
             <div class="card-title">Judo — École des champions (6-8 ans)</div>
@@ -314,7 +345,7 @@
         <div class="note">Horaires précis non publiés en ligne — à confirmer avec le club.</div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
             <div class="card-title">U7 — nés en 2020</div>
@@ -333,219 +364,167 @@
     </div>
   </section>
 
-  <!-- VINCENNES -->
+<!-- CHARENTON-LE-PONT -->
   <section class="zone">
     <div class="zone-header">
-      <h2>Vincennes (94300)</h2>
-      <span class="zone-dist">~10 min</span>
+      <h2>Charenton-le-Pont (94220)</h2>
+      <span class="zone-dist">~10-12 min</span>
     </div>
     <div class="cards">
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
-            <div class="card-title">École de tennis (nés jusqu'en 2020 inclus)</div>
-            <div class="structure">Cercle Amical de Vincennes (CAV)</div>
+            <div class="card-title">École de natation (CP à CE2)</div>
+            <div class="structure">CNMC — Cercle Nageurs Marne Charenton</div>
           </div>
           <span class="tag sport">Sport</span>
         </div>
-        <div class="day">Mercredi 17h–18h ou un soir de semaine 17h–18h</div>
+        <div class="day">Mardi 17h15–18h, mercredi 9h15–10h / 13h15–14h / 14h45–15h30, jeudi 17h15–18h, vendredi 17h15–18h, ou samedi 8h30–9h15 / 10h15–11h / 11h–11h45 / 11h45–12h30 / 12h30–13h15</div>
         <div class="details">
-          <div><span class="label">Lieu</span>Stade Jean Mermoz, route de la Pyramide, 75012 Paris</div>
-          <div><span class="label">Tarif</span>Voir tarifs 2025-2026 sur cavincennes.fr (à confirmer pour 2026-2027)</div>
-          <div><span class="label">Inscription</span>Début des cours mi-septembre 2026 (à confirmer)</div>
-          <div><span class="label">Contact</span>edt@cavincennes.club · 01 43 28 18 15</div>
+          <div><span class="label">Tarif</span>460 €/an</div>
+          <div><span class="label">Lieu</span>Piscine de Charenton — Grand bassin, 113 rue de Paris, Charenton-le-Pont</div>
+          <div><span class="label">Contact</span>cnmc.fr</div>
         </div>
+        <div class="note">Un seul créneau à choisir parmi les disponibilités ci-dessus (certains créneaux, comme lun. 17h et sam. 9h15, sont déjà complets).</div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
-            <div class="card-title">École de rugby (6-15 ans)</div>
-            <div class="structure">Rugby Club Vincennes (RCV)</div>
+            <div class="card-title">École de tri — Mini-poussins (nés 2020-2021)</div>
+            <div class="structure">Charenton Triathlon — "Les fous aux pieds bleus"</div>
           </div>
           <span class="tag sport">Sport</span>
         </div>
-        <div class="day">Mercredi après-midi (~2h)</div>
+        <div class="day">Jour précis de l'école jeunes non communiqué (planning adultes/cadets/juniors : lun/mar/jeu/sam/dim)</div>
         <div class="details">
-          <div><span class="label">Lieu</span>Vincennes</div>
-          <div><span class="label">Contact</span>rcvincennes.fr</div>
+          <div><span class="label">Âge requis</span>Dès 6 ans (Mini-poussins nés 2020-2021 pour 2026-2027)</div>
+          <div><span class="label">Prérequis</span>Savoir nager 25 m sans s'aider du bord ; VTT en état de marche indispensable</div>
+          <div><span class="label">Lieu</span>Piscine de Charenton + Bois de Vincennes (course à pied)</div>
+          <div><span class="label">Tarif</span>280 €/an (licence FFTri jeune incluse)</div>
+          <div><span class="label">Inscription</span>Pré-inscriptions 2026-2027 ouvertes — espacetri.fftri.com · charenton.tri@gmail.com</div>
         </div>
+        <div class="note">Séance d'essai gratuite possible. Planning détaillé de l'école jeunes (jour/heure) à confirmer avec le club.</div>
       </div>
 
-      <div class="card art">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
-            <div class="card-title">Initiation danses (6 ans - CP)</div>
-            <div class="structure">Conservatoire de Vincennes</div>
-          </div>
-          <span class="tag art">Art / Danse</span>
-        </div>
-        <div class="day">Jour précis non communiqué (cours 1h/semaine)</div>
-        <div class="details">
-          <div><span class="label">Lieu</span>8 avenue Pierre Brossolette, 94300 Vincennes</div>
-          <div><span class="label">Tarif</span>Non communiqué (quotient familial ; tarif hors commune à confirmer)</div>
-          <div><span class="label">Rentrée</span>Reprise des cours lundi 7 septembre 2026</div>
-          <div><span class="label">Contact</span>01 43 98 68 68 · llakhdhar@vincennes.fr</div>
-        </div>
-      </div>
-
-      <div class="card sport">
-        <div class="card-top">
-          <div>
-            <div class="card-title">Baby Volley (3-6 ans)</div>
-            <div class="structure">Vincennes Volley Club</div>
+            <div class="card-title">École de football (dès 5 ans)</div>
+            <div class="structure">CAP Charenton</div>
           </div>
           <span class="tag sport">Sport</span>
-        </div>
-        <div class="day">Samedi 9h45–11h00 ou 11h00–12h15</div>
-        <div class="details">
-          <div><span class="label">Lieu</span>Gymnase Simone Veil, 34 rue Mirabeau, 94300 Vincennes</div>
-          <div><span class="label">Inscription</span>vincennesvolleyclub.com/inscriptions</div>
-        </div>
-        <div class="note">Nino est en haut de la tranche d'âge (3-6 ans) — vérifier avec le club s'il est orienté vers l'École de Volley (7-11 ans) selon son niveau.</div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- SAINT-MANDÉ -->
-  <section class="zone">
-    <div class="zone-header">
-      <h2>Saint-Mandé (94160)</h2>
-      <span class="zone-dist">~10 min</span>
-    </div>
-    <div class="cards">
-
-      <div class="card sport">
-        <div class="card-top">
-          <div>
-            <div class="card-title">Judo — groupe CP/CE1</div>
-            <div class="structure">La Saint Mandéenne (association omnisports)</div>
-          </div>
-          <span class="tag sport">Sport</span>
-        </div>
-        <div class="day">Mardi ou jeudi 17h–18h</div>
-        <div class="details">
-          <div><span class="label">Tarif</span>313 €/an (extérieurs)</div>
-          <div><span class="label">Lieu</span>Salle Omnisport, Saint-Mandé</div>
-          <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
-        </div>
-      </div>
-
-      <div class="card sport">
-        <div class="card-top">
-          <div>
-            <div class="card-title">École de nage — grand bain, groupe CP</div>
-            <div class="structure">La Saint Mandéenne</div>
-          </div>
-          <span class="tag sport">Sport</span>
-        </div>
-        <div class="day">Mardi 17h–17h45</div>
-        <div class="details">
-          <div><span class="label">Lieu</span>Centre Sportif, Saint-Mandé</div>
-          <div><span class="label">Tarif</span>297 €/an (Saint-Mandéens, 45 min) · 327 € (extérieurs)</div>
-          <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
-        </div>
-      </div>
-
-      <div class="card art">
-        <div class="card-top">
-          <div>
-            <div class="card-title">Danse Modern Jazz — groupe CP</div>
-            <div class="structure">La Saint Mandéenne</div>
-          </div>
-          <span class="tag art">Art / Danse</span>
-        </div>
-        <div class="day">Vendredi 17h–18h</div>
-        <div class="details">
-          <div><span class="label">Lieu</span>Centre Sportif, Saint-Mandé</div>
-          <div><span class="label">Tarif</span>283 €/an (Saint-Mandéens) · 313 € (extérieurs)</div>
-          <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
-        </div>
-      </div>
-
-      <div class="card art">
-        <div class="card-top">
-          <div>
-            <div class="card-title">Musique — Initiation 1 (dès 6 ans)</div>
-            <div class="structure">Conservatoire Robert-Lamoureux</div>
-          </div>
-          <span class="tag art">Art / Musique</span>
-        </div>
-        <div class="day">Jour à confirmer (créneaux lun/mar/jeu/ven 14h-22h, mer 9h-22h, sam 9h-17h)</div>
-        <div class="details">
-          <div><span class="label">Contact</span>info-conservatoire@mairie-saint-mande.fr · 01 41 74 03 02</div>
-        </div>
-        <div class="note">Réunion d'information obligatoire pour les nouvelles inscriptions (fin juin). Tarifs non communiqués pour 2026-2027.</div>
-      </div>
-
-      <div class="card art">
-        <div class="card-top">
-          <div>
-            <div class="card-title">Danse — Éveil 2 (6 ans)</div>
-            <div class="structure">Conservatoire Robert-Lamoureux</div>
-          </div>
-          <span class="tag art">Art / Danse</span>
         </div>
         <div class="day">Jour à confirmer</div>
         <div class="details">
-          <div><span class="label">Contact</span>info-conservatoire@mairie-saint-mande.fr</div>
+          <div><span class="label">Lieu</span>Charenton-le-Pont</div>
+          <div><span class="label">Inscription</span>Permanences lun-ven 14h30-18h30, mercredi 9h30-12h/13h30-18h30</div>
+          <div><span class="label">Contact</span>capcharenton.fr</div>
         </div>
+        <div class="note">Club labellisé FFF, 600+ licenciés. Horaires et tarifs 2026-2027 à confirmer sur le site.</div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
-            <div class="card-title">Mini tennis (4-6 ans)</div>
-            <div class="structure">LTSM — Lawn Tennis Saint-Mandé</div>
+            <div class="card-title">École de rugby — U6 Lutins (6 ans)</div>
+            <div class="structure">RCMASM — Rugby Charenton Maisons-Alfort Saint-Maurice</div>
           </div>
           <span class="tag sport">Sport</span>
         </div>
-        <div class="day">Semaine 17h-19h, ou mercredi/samedi 9h-19h (cours 45 min)</div>
+        <div class="day">Jour à confirmer</div>
         <div class="details">
-          <div><span class="label">Lieu</span>Saint-Mandé</div>
-          <div><span class="label">Tarif</span>Tarifs saison 2025-2026 disponibles sur ltsm.fr (à confirmer pour 2026-2027)</div>
-          <div><span class="label">Contact</span>enseignement@ltsm.fr</div>
+          <div><span class="label">Âge requis</span>U6 Lutins = 6 ans, pile la tranche de Nino</div>
+          <div><span class="label">Lieu</span>Charenton / Maisons-Alfort / Saint-Maurice</div>
+          <div><span class="label">Contact</span>rcmasm.com</div>
         </div>
       </div>
 
-      <div class="card sport">
+      <div class="card musique" data-cat="musique">
         <div class="card-top">
           <div>
-            <div class="card-title">Escrime — groupe CP/CE1</div>
-            <div class="structure">La Saint Mandéenne (association omnisports)</div>
+            <div class="card-title">Cursus musique (éveil → 1er cycle)</div>
+            <div class="structure">Conservatoire André Navarra</div>
           </div>
-          <span class="tag sport">Sport</span>
+          <span class="tag musique">Art / Musique</span>
         </div>
-        <div class="day">Jeudi 17h–17h45</div>
+        <div class="day">Jour à confirmer</div>
         <div class="details">
-          <div><span class="label">Tarif</span>275 €/an (extérieurs)</div>
-          <div><span class="label">Lieu</span>CRESCO, 4 avenue Pasteur, Saint-Mandé</div>
-          <div><span class="label">Inscription</span>Jusqu'au 24 juillet 2026 — lasaintmandeenne.fr</div>
+          <div><span class="label">Lieu</span>3 place des Marseillais, Charenton-le-Pont</div>
+          <div><span class="label">Inscription</span>Dossiers à déposer au secrétariat (1 allée des Tilleuls) à partir du 1er juin 2026, avant le 26 juin 2026</div>
         </div>
       </div>
 
-      <div class="card sport">
+      <div class="card arts" data-cat="arts">
         <div class="card-top">
           <div>
-            <div class="card-title">Escalade — groupe CP/CE1</div>
-            <div class="structure">La Saint Mandéenne (association omnisports)</div>
+            <div class="card-title">Éveil aux arts plastiques (6-7 ans)</div>
+            <div class="structure">École d'art municipale Pierre Soulages</div>
+          </div>
+          <span class="tag arts">Art / Dessin, peinture, volume</span>
+        </div>
+        <div class="day">1h30/semaine — jour à confirmer</div>
+        <div class="details">
+          <div><span class="label">Tarif</span>117 € à 194 €/an selon quotient familial (jusqu'à 194 € hors commune)</div>
+          <div><span class="label">Lieu</span>Atelier Pierre Soulages, 87 bis rue du Petit Château, Charenton-le-Pont</div>
+          <div><span class="label">Inscription</span>Fiche à télécharger + photo d'identité + justificatif de domicile — atelierpierresoulages@charenton.fr</div>
+        </div>
+        <div class="note">Portes ouvertes fin juin et Forum des associations début septembre. Dossiers traités par ordre d'arrivée.</div>
+      </div>
+
+      <div class="card arts" data-cat="arts">
+        <div class="card-top">
+          <div>
+            <div class="card-title">Stage découverte poterie, peinture, mosaïque (- de 7 ans)</div>
+            <div class="structure">La Charpente — École d'art</div>
+          </div>
+          <span class="tag arts">Art / Poterie, peinture, mosaïque</span>
+        </div>
+        <div class="day">Format stage (vacances scolaires) — dates à réserver</div>
+        <div class="details">
+          <div><span class="label">Lieu</span>14 rue Plisson, 94160 Saint-Mandé</div>
+          <div><span class="label">Contact</span>aude@lacharpente.com · 01 48 08 46 30 · lacharpente.com</div>
+        </div>
+        <div class="note">Max 6 enfants par stage, matériel et goûter fournis, réservation indispensable. Il s'agit de stages de vacances et non d'un cours hebdomadaire à l'année.</div>
+      </div>
+
+      <div class="card sport" data-cat="sport">
+        <div class="card-top">
+          <div>
+            <div class="card-title">École de tennis (5-18 ans)</div>
+            <div class="structure">Tennis Club de Charenton</div>
           </div>
           <span class="tag sport">Sport</span>
         </div>
-        <div class="day">Samedi 9h–10h</div>
+        <div class="day">Jour à confirmer (saison mi-septembre à mi-juin)</div>
         <div class="details">
-          <div><span class="label">Tarif</span>313 €/an (extérieurs)</div>
-          <div><span class="label">Lieu</span>CRESCO, 4 avenue Pasteur, Saint-Mandé</div>
-          <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
+          <div><span class="label">Lieu</span>43 rue de Paris, 94220 Charenton-le-Pont</div>
+          <div><span class="label">Inscription</span>Questionnaire de santé + justificatif de domicile + bulletin d'inscription — tennisclubcharenton.fr</div>
         </div>
+        <div class="note">4 coachs diplômés d'État + 4 aide-moniteurs. Tarifs 2026-2027 non publiés en ligne — à confirmer directement avec le club.</div>
+      </div>
+
+      <div class="card sport" data-cat="sport">
+        <div class="card-top">
+          <div>
+            <div class="card-title">Baby volley — M7 (4-6 ans)</div>
+            <div class="structure">C.N.M. Charenton Volley-ball</div>
+          </div>
+          <span class="tag sport">Sport</span>
+        </div>
+        <div class="day">Mercredi 10h–10h50 (prioritaire) ou samedi 9h45–10h35</div>
+        <div class="details">
+          <div><span class="label">Lieu</span>Gymnase Nelson Paillou, Charenton-le-Pont</div>
+          <div><span class="label">Inscription</span>charentonvolley.fr/inscription</div>
+        </div>
+        <div class="note">Nino est en haut de la tranche M7 (4-6 ans) — le club pourra proposer l'École M9 selon son niveau à l'essai. Reprise semaine du 7 septembre 2026.</div>
       </div>
 
     </div>
   </section>
 
-  <!-- BOIS DE VINCENNES -->
+<!-- BOIS DE VINCENNES -->
   <section class="zone">
     <div class="zone-header">
       <h2>Bois de Vincennes</h2>
@@ -553,7 +532,7 @@
     </div>
     <div class="cards">
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
             <div class="card-title">Poney Club — groupe 6-11 ans</div>
@@ -569,7 +548,7 @@
         </div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
             <div class="card-title">Mini-Tennis (4 à 7 ans)</div>
@@ -589,167 +568,219 @@
     </div>
   </section>
 
-  <!-- CHARENTON-LE-PONT -->
+<!-- SAINT-MANDÉ -->
   <section class="zone">
     <div class="zone-header">
-      <h2>Charenton-le-Pont (94220)</h2>
-      <span class="zone-dist">~10-12 min</span>
+      <h2>Saint-Mandé (94160)</h2>
+      <span class="zone-dist">~10 min</span>
     </div>
     <div class="cards">
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
-            <div class="card-title">École de natation (CP à CE2)</div>
-            <div class="structure">CNMC — Cercle Nageurs Marne Charenton</div>
+            <div class="card-title">Judo — groupe CP/CE1</div>
+            <div class="structure">La Saint Mandéenne (association omnisports)</div>
           </div>
           <span class="tag sport">Sport</span>
         </div>
-        <div class="day">Mardi 17h15–18h, mercredi 9h15–10h / 13h15–14h / 14h45–15h30, jeudi 17h15–18h, vendredi 17h15–18h, ou samedi 8h30–9h15 / 10h15–11h / 11h–11h45 / 11h45–12h30 / 12h30–13h15</div>
+        <div class="day">Mardi ou jeudi 17h–18h</div>
         <div class="details">
-          <div><span class="label">Tarif</span>460 €/an</div>
-          <div><span class="label">Lieu</span>Piscine de Charenton — Grand bassin, 113 rue de Paris, Charenton-le-Pont</div>
-          <div><span class="label">Contact</span>cnmc.fr</div>
+          <div><span class="label">Tarif</span>313 €/an (extérieurs)</div>
+          <div><span class="label">Lieu</span>Salle Omnisport, Saint-Mandé</div>
+          <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
         </div>
-        <div class="note">Un seul créneau à choisir parmi les disponibilités ci-dessus (certains créneaux, comme lun. 17h et sam. 9h15, sont déjà complets).</div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
-            <div class="card-title">École de tri — Mini-poussins (nés 2020-2021)</div>
-            <div class="structure">Charenton Triathlon — "Les fous aux pieds bleus"</div>
+            <div class="card-title">École de nage — grand bain, groupe CP</div>
+            <div class="structure">La Saint Mandéenne</div>
           </div>
           <span class="tag sport">Sport</span>
         </div>
-        <div class="day">Jour précis de l'école jeunes non communiqué (planning adultes/cadets/juniors : lun/mar/jeu/sam/dim)</div>
+        <div class="day">Mardi 17h–17h45</div>
         <div class="details">
-          <div><span class="label">Âge requis</span>Dès 6 ans (Mini-poussins nés 2020-2021 pour 2026-2027)</div>
-          <div><span class="label">Prérequis</span>Savoir nager 25 m sans s'aider du bord ; VTT en état de marche indispensable</div>
-          <div><span class="label">Lieu</span>Piscine de Charenton + Bois de Vincennes (course à pied)</div>
-          <div><span class="label">Tarif</span>280 €/an (licence FFTri jeune incluse)</div>
-          <div><span class="label">Inscription</span>Pré-inscriptions 2026-2027 ouvertes — espacetri.fftri.com · charenton.tri@gmail.com</div>
+          <div><span class="label">Lieu</span>Centre Sportif, Saint-Mandé</div>
+          <div><span class="label">Tarif</span>297 €/an (Saint-Mandéens, 45 min) · 327 € (extérieurs)</div>
+          <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
         </div>
-        <div class="note">Séance d'essai gratuite possible. Planning détaillé de l'école jeunes (jour/heure) à confirmer avec le club.</div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
-            <div class="card-title">École de football (dès 5 ans)</div>
-            <div class="structure">CAP Charenton</div>
+            <div class="card-title">Danse Modern Jazz — groupe CP</div>
+            <div class="structure">La Saint Mandéenne</div>
           </div>
-          <span class="tag sport">Sport</span>
+          <span class="tag sport">Art / Danse</span>
+        </div>
+        <div class="day">Vendredi 17h–18h</div>
+        <div class="details">
+          <div><span class="label">Lieu</span>Centre Sportif, Saint-Mandé</div>
+          <div><span class="label">Tarif</span>283 €/an (Saint-Mandéens) · 313 € (extérieurs)</div>
+          <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
+        </div>
+      </div>
+
+      <div class="card musique" data-cat="musique">
+        <div class="card-top">
+          <div>
+            <div class="card-title">Musique — Initiation 1 (dès 6 ans)</div>
+            <div class="structure">Conservatoire Robert-Lamoureux</div>
+          </div>
+          <span class="tag musique">Art / Musique</span>
+        </div>
+        <div class="day">Jour à confirmer (créneaux lun/mar/jeu/ven 14h-22h, mer 9h-22h, sam 9h-17h)</div>
+        <div class="details">
+          <div><span class="label">Contact</span>info-conservatoire@mairie-saint-mande.fr · 01 41 74 03 02</div>
+        </div>
+        <div class="note">Réunion d'information obligatoire pour les nouvelles inscriptions (fin juin). Tarifs non communiqués pour 2026-2027.</div>
+      </div>
+
+      <div class="card sport" data-cat="sport">
+        <div class="card-top">
+          <div>
+            <div class="card-title">Danse — Éveil 2 (6 ans)</div>
+            <div class="structure">Conservatoire Robert-Lamoureux</div>
+          </div>
+          <span class="tag sport">Art / Danse</span>
         </div>
         <div class="day">Jour à confirmer</div>
         <div class="details">
-          <div><span class="label">Lieu</span>Charenton-le-Pont</div>
-          <div><span class="label">Inscription</span>Permanences lun-ven 14h30-18h30, mercredi 9h30-12h/13h30-18h30</div>
-          <div><span class="label">Contact</span>capcharenton.fr</div>
+          <div><span class="label">Contact</span>info-conservatoire@mairie-saint-mande.fr</div>
         </div>
-        <div class="note">Club labellisé FFF, 600+ licenciés. Horaires et tarifs 2026-2027 à confirmer sur le site.</div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
-            <div class="card-title">École de rugby — U6 Lutins (6 ans)</div>
-            <div class="structure">RCMASM — Rugby Charenton Maisons-Alfort Saint-Maurice</div>
+            <div class="card-title">Mini tennis (4-6 ans)</div>
+            <div class="structure">LTSM — Lawn Tennis Saint-Mandé</div>
           </div>
           <span class="tag sport">Sport</span>
         </div>
-        <div class="day">Jour à confirmer</div>
+        <div class="day">Semaine 17h-19h, ou mercredi/samedi 9h-19h (cours 45 min)</div>
         <div class="details">
-          <div><span class="label">Âge requis</span>U6 Lutins = 6 ans, pile la tranche de Nino</div>
-          <div><span class="label">Lieu</span>Charenton / Maisons-Alfort / Saint-Maurice</div>
-          <div><span class="label">Contact</span>rcmasm.com</div>
+          <div><span class="label">Lieu</span>Saint-Mandé</div>
+          <div><span class="label">Tarif</span>Tarifs saison 2025-2026 disponibles sur ltsm.fr (à confirmer pour 2026-2027)</div>
+          <div><span class="label">Contact</span>enseignement@ltsm.fr</div>
         </div>
       </div>
 
-      <div class="card art">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
-            <div class="card-title">Cursus musique (éveil → 1er cycle)</div>
-            <div class="structure">Conservatoire André Navarra</div>
-          </div>
-          <span class="tag art">Art / Musique</span>
-        </div>
-        <div class="day">Jour à confirmer</div>
-        <div class="details">
-          <div><span class="label">Lieu</span>3 place des Marseillais, Charenton-le-Pont</div>
-          <div><span class="label">Inscription</span>Dossiers à déposer au secrétariat (1 allée des Tilleuls) à partir du 1er juin 2026, avant le 26 juin 2026</div>
-        </div>
-      </div>
-
-      <div class="card art">
-        <div class="card-top">
-          <div>
-            <div class="card-title">Éveil aux arts plastiques (6-7 ans)</div>
-            <div class="structure">École d'art municipale Pierre Soulages</div>
-          </div>
-          <span class="tag art">Art / Dessin, peinture, volume</span>
-        </div>
-        <div class="day">1h30/semaine — jour à confirmer</div>
-        <div class="details">
-          <div><span class="label">Tarif</span>117 € à 194 €/an selon quotient familial (jusqu'à 194 € hors commune)</div>
-          <div><span class="label">Lieu</span>Atelier Pierre Soulages, 87 bis rue du Petit Château, Charenton-le-Pont</div>
-          <div><span class="label">Inscription</span>Fiche à télécharger + photo d'identité + justificatif de domicile — atelierpierresoulages@charenton.fr</div>
-        </div>
-        <div class="note">Portes ouvertes fin juin et Forum des associations début septembre. Dossiers traités par ordre d'arrivée.</div>
-      </div>
-
-      <div class="card art">
-        <div class="card-top">
-          <div>
-            <div class="card-title">Stage découverte poterie, peinture, mosaïque (- de 7 ans)</div>
-            <div class="structure">La Charpente — École d'art</div>
-          </div>
-          <span class="tag art">Art / Poterie, peinture, mosaïque</span>
-        </div>
-        <div class="day">Format stage (vacances scolaires) — dates à réserver</div>
-        <div class="details">
-          <div><span class="label">Lieu</span>14 rue Plisson, 94160 Saint-Mandé</div>
-          <div><span class="label">Contact</span>aude@lacharpente.com · 01 48 08 46 30 · lacharpente.com</div>
-        </div>
-        <div class="note">Max 6 enfants par stage, matériel et goûter fournis, réservation indispensable. Il s'agit de stages de vacances et non d'un cours hebdomadaire à l'année.</div>
-      </div>
-
-      <div class="card sport">
-        <div class="card-top">
-          <div>
-            <div class="card-title">École de tennis (5-18 ans)</div>
-            <div class="structure">Tennis Club de Charenton</div>
+            <div class="card-title">Escrime — groupe CP/CE1</div>
+            <div class="structure">La Saint Mandéenne (association omnisports)</div>
           </div>
           <span class="tag sport">Sport</span>
         </div>
-        <div class="day">Jour à confirmer (saison mi-septembre à mi-juin)</div>
+        <div class="day">Jeudi 17h–17h45</div>
         <div class="details">
-          <div><span class="label">Lieu</span>43 rue de Paris, 94220 Charenton-le-Pont</div>
-          <div><span class="label">Inscription</span>Questionnaire de santé + justificatif de domicile + bulletin d'inscription — tennisclubcharenton.fr</div>
+          <div><span class="label">Tarif</span>275 €/an (extérieurs)</div>
+          <div><span class="label">Lieu</span>CRESCO, 4 avenue Pasteur, Saint-Mandé</div>
+          <div><span class="label">Inscription</span>Jusqu'au 24 juillet 2026 — lasaintmandeenne.fr</div>
         </div>
-        <div class="note">4 coachs diplômés d'État + 4 aide-moniteurs. Tarifs 2026-2027 non publiés en ligne — à confirmer directement avec le club.</div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
-            <div class="card-title">Baby volley — M7 (4-6 ans)</div>
-            <div class="structure">C.N.M. Charenton Volley-ball</div>
+            <div class="card-title">Escalade — groupe CP/CE1</div>
+            <div class="structure">La Saint Mandéenne (association omnisports)</div>
           </div>
           <span class="tag sport">Sport</span>
         </div>
-        <div class="day">Mercredi 10h–10h50 (prioritaire) ou samedi 9h45–10h35</div>
+        <div class="day">Samedi 9h–10h</div>
         <div class="details">
-          <div><span class="label">Lieu</span>Gymnase Nelson Paillou, Charenton-le-Pont</div>
-          <div><span class="label">Inscription</span>charentonvolley.fr/inscription</div>
+          <div><span class="label">Tarif</span>313 €/an (extérieurs)</div>
+          <div><span class="label">Lieu</span>CRESCO, 4 avenue Pasteur, Saint-Mandé</div>
+          <div><span class="label">Inscription</span>En ligne — lasaintmandeenne.fr/adhesion</div>
         </div>
-        <div class="note">Nino est en haut de la tranche M7 (4-6 ans) — le club pourra proposer l'École M9 selon son niveau à l'essai. Reprise semaine du 7 septembre 2026.</div>
       </div>
 
     </div>
   </section>
 
-  <!-- PARIS 12E -->
+<!-- VINCENNES -->
+  <section class="zone">
+    <div class="zone-header">
+      <h2>Vincennes (94300)</h2>
+      <span class="zone-dist">~10 min</span>
+    </div>
+    <div class="cards">
+
+      <div class="card sport" data-cat="sport">
+        <div class="card-top">
+          <div>
+            <div class="card-title">École de tennis (nés jusqu'en 2020 inclus)</div>
+            <div class="structure">Cercle Amical de Vincennes (CAV)</div>
+          </div>
+          <span class="tag sport">Sport</span>
+        </div>
+        <div class="day">Mercredi 17h–18h ou un soir de semaine 17h–18h</div>
+        <div class="details">
+          <div><span class="label">Lieu</span>Stade Jean Mermoz, route de la Pyramide, 75012 Paris</div>
+          <div><span class="label">Tarif</span>Voir tarifs 2025-2026 sur cavincennes.fr (à confirmer pour 2026-2027)</div>
+          <div><span class="label">Inscription</span>Début des cours mi-septembre 2026 (à confirmer)</div>
+          <div><span class="label">Contact</span>edt@cavincennes.club · 01 43 28 18 15</div>
+        </div>
+      </div>
+
+      <div class="card sport" data-cat="sport">
+        <div class="card-top">
+          <div>
+            <div class="card-title">École de rugby (6-15 ans)</div>
+            <div class="structure">Rugby Club Vincennes (RCV)</div>
+          </div>
+          <span class="tag sport">Sport</span>
+        </div>
+        <div class="day">Mercredi après-midi (~2h)</div>
+        <div class="details">
+          <div><span class="label">Lieu</span>Vincennes</div>
+          <div><span class="label">Contact</span>rcvincennes.fr</div>
+        </div>
+      </div>
+
+      <div class="card sport" data-cat="sport">
+        <div class="card-top">
+          <div>
+            <div class="card-title">Initiation danses (6 ans - CP)</div>
+            <div class="structure">Conservatoire de Vincennes</div>
+          </div>
+          <span class="tag sport">Art / Danse</span>
+        </div>
+        <div class="day">Jour précis non communiqué (cours 1h/semaine)</div>
+        <div class="details">
+          <div><span class="label">Lieu</span>8 avenue Pierre Brossolette, 94300 Vincennes</div>
+          <div><span class="label">Tarif</span>Non communiqué (quotient familial ; tarif hors commune à confirmer)</div>
+          <div><span class="label">Rentrée</span>Reprise des cours lundi 7 septembre 2026</div>
+          <div><span class="label">Contact</span>01 43 98 68 68 · llakhdhar@vincennes.fr</div>
+        </div>
+      </div>
+
+      <div class="card sport" data-cat="sport">
+        <div class="card-top">
+          <div>
+            <div class="card-title">Baby Volley (3-6 ans)</div>
+            <div class="structure">Vincennes Volley Club</div>
+          </div>
+          <span class="tag sport">Sport</span>
+        </div>
+        <div class="day">Samedi 9h45–11h00 ou 11h00–12h15</div>
+        <div class="details">
+          <div><span class="label">Lieu</span>Gymnase Simone Veil, 34 rue Mirabeau, 94300 Vincennes</div>
+          <div><span class="label">Inscription</span>vincennesvolleyclub.com/inscriptions</div>
+        </div>
+        <div class="note">Nino est en haut de la tranche d'âge (3-6 ans) — vérifier avec le club s'il est orienté vers l'École de Volley (7-11 ans) selon son niveau.</div>
+      </div>
+
+    </div>
+  </section>
+
+<!-- PARIS 12E -->
   <section class="zone">
     <div class="zone-header">
       <h2>Paris 12e</h2>
@@ -757,13 +788,13 @@
     </div>
     <div class="cards">
 
-      <div class="card art">
+      <div class="card musique" data-cat="musique">
         <div class="card-top">
           <div>
             <div class="card-title">Musique / Danse / Théâtre</div>
             <div class="structure">Conservatoire municipal Paul Dukas</div>
           </div>
-          <span class="tag art">Art / Musique / Danse</span>
+          <span class="tag musique">Art / Musique / Danse</span>
         </div>
         <div class="day">Jour à confirmer</div>
         <div class="details">
@@ -773,7 +804,7 @@
         </div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
             <div class="card-title">Centres d'animation du 12e (sport, danse, activités diverses)</div>
@@ -788,7 +819,7 @@
         <div class="note">Piste identifiée mais non détaillée faute de temps — plusieurs centres d'animation dans le 12e proposent des activités dès 2 ans, tarification solidaire selon quotient familial.</div>
       </div>
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
             <div class="card-title">Éveil athlétique U10 (6-8 ans)</div>
@@ -807,7 +838,7 @@
     </div>
   </section>
 
-  <!-- SAINT-MAUR-DES-FOSSÉS -->
+<!-- SAINT-MAUR-DES-FOSSÉS -->
   <section class="zone">
     <div class="zone-header">
       <h2>Saint-Maur-des-Fossés (94100)</h2>
@@ -815,7 +846,7 @@
     </div>
     <div class="cards">
 
-      <div class="card sport">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
             <div class="card-title">Natation + multisports (forfait E.P.I.S.)</div>
@@ -833,13 +864,13 @@
         <div class="note">Commune plus éloignée que le périmètre initial (~20 min) — à envisager seulement si les options plus proches ne conviennent pas.</div>
       </div>
 
-      <div class="card art">
+      <div class="card sport" data-cat="sport">
         <div class="card-top">
           <div>
             <div class="card-title">Danse classique / jazz / contemporaine</div>
             <div class="structure">Conservatoire à Rayonnement Régional de Saint-Maur-des-Fossés</div>
           </div>
-          <span class="tag art">Art / Danse</span>
+          <span class="tag sport">Art / Danse</span>
         </div>
         <div class="day">Jour à confirmer</div>
         <div class="details">
@@ -870,5 +901,20 @@
   Recherche réalisée le 17 juillet 2026 · À relancer avant chaque rentrée (juin-juillet)
 </footer>
 
+<script>
+function applyFilters(scope){
+  scope = scope || document;
+  var active = {};
+  scope.querySelectorAll('.filter-cb').forEach(function(cb){ active[cb.dataset.cat] = cb.checked; });
+  scope.querySelectorAll('.card').forEach(function(card){
+    var cat = card.dataset.cat;
+    card.style.display = active[cat] ? '' : 'none';
+  });
+  scope.querySelectorAll('.zone').forEach(function(zone){
+    var anyVisible = Array.prototype.some.call(zone.querySelectorAll('.card'), function(c){ return c.style.display !== 'none'; });
+    zone.style.display = anyVisible ? '' : 'none';
+  });
+}
+</script>
 </body>
 </html>
