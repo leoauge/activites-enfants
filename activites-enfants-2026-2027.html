@@ -139,12 +139,17 @@
 
   .zone{margin-bottom:34px;}
   .zone-header{
+    position:sticky;
+    top:69px;
+    z-index:10;
+    background:var(--bg);
     display:flex;
     align-items:baseline;
     justify-content:space-between;
     border-bottom:2px solid var(--accent);
-    padding-bottom:6px;
+    padding:10px 0 6px;
     margin-bottom:14px;
+    margin-top:-10px;
     flex-wrap:wrap;
     gap:6px;
   }
@@ -216,6 +221,11 @@
     border-radius:6px;
     padding:6px 10px;
   }
+  .card.arts .note{
+    color:#3b5a76;
+    background:#eaf1f8;
+    border-color:#bcd2e5;
+  }
   .caveats{
     background:var(--warn-bg);
     border:1px solid var(--warn-border);
@@ -241,23 +251,27 @@
     margin:-10px auto 26px;
     font-size:0.85rem;
   }
-  .filters label{
+  .filter-badge{
     display:inline-flex;
     align-items:center;
     gap:6px;
-    background:var(--card);
-    border:1px solid var(--border);
+    border:1.5px solid var(--border);
     border-radius:999px;
-    padding:5px 12px 5px 8px;
+    padding:6px 14px 6px 10px;
     cursor:pointer;
     user-select:none;
+    font-weight:600;
+    font-size:0.82rem;
+    font-family:inherit;
+    background:#eceae5;
+    color:#9a9691;
+    transition:background 0.15s, color 0.15s, border-color 0.15s;
   }
-  .filters input[type="checkbox"]{
-    accent-color:var(--accent);
-    width:14px;
-    height:14px;
-    cursor:pointer;
-  }
+  .filter-badge .dot{transition:background 0.15s;}
+  .filter-badge[data-active="false"] .dot{background:#b7b3ac !important;}
+  .filter-badge[data-cat="sport"][data-active="true"]{background:var(--sport-bg); color:var(--sport); border-color:var(--sport);}
+  .filter-badge[data-cat="musique"][data-active="true"]{background:var(--musique-bg); color:var(--musique); border-color:var(--musique);}
+  .filter-badge[data-cat="arts"][data-active="true"]{background:var(--arts-bg); color:var(--arts); border-color:var(--arts);}
 </style>
 </head>
 <body>
@@ -279,9 +293,9 @@
     <main>
 
       <div class="filters">
-        <label><input type="checkbox" class="filter-cb" data-cat="sport" checked onchange="applyFilters(this.closest('.child-panel')||document)"> <i class="dot sport"></i> Sport</label>
-        <label><input type="checkbox" class="filter-cb" data-cat="musique" checked onchange="applyFilters(this.closest('.child-panel')||document)"> <i class="dot musique"></i> Musique</label>
-        <label><input type="checkbox" class="filter-cb" data-cat="arts" checked onchange="applyFilters(this.closest('.child-panel')||document)"> <i class="dot arts"></i> Arts plastiques</label>
+        <button type="button" class="filter-badge" data-cat="sport" data-active="true" onclick="toggleFilter(this)"><i class="dot sport"></i> Sport</button>
+        <button type="button" class="filter-badge" data-cat="musique" data-active="true" onclick="toggleFilter(this)"><i class="dot musique"></i> Musique</button>
+        <button type="button" class="filter-badge" data-cat="arts" data-active="true" onclick="toggleFilter(this)"><i class="dot arts"></i> Arts plastiques</button>
       </div>
 
       <!-- SAINT-MAURICE -->
@@ -940,9 +954,9 @@
     <main>
 
       <div class="filters">
-        <label><input type="checkbox" class="filter-cb" data-cat="sport" checked onchange="applyFilters(this.closest('.child-panel')||document)"> <i class="dot sport"></i> Sport</label>
-        <label><input type="checkbox" class="filter-cb" data-cat="musique" checked onchange="applyFilters(this.closest('.child-panel')||document)"> <i class="dot musique"></i> Musique</label>
-        <label><input type="checkbox" class="filter-cb" data-cat="arts" checked onchange="applyFilters(this.closest('.child-panel')||document)"> <i class="dot arts"></i> Arts plastiques</label>
+        <button type="button" class="filter-badge" data-cat="sport" data-active="true" onclick="toggleFilter(this)"><i class="dot sport"></i> Sport</button>
+        <button type="button" class="filter-badge" data-cat="musique" data-active="true" onclick="toggleFilter(this)"><i class="dot musique"></i> Musique</button>
+        <button type="button" class="filter-badge" data-cat="arts" data-active="true" onclick="toggleFilter(this)"><i class="dot arts"></i> Arts plastiques</button>
       </div>
 
       <!-- SAINT-MAURICE -->
@@ -1468,7 +1482,7 @@
 function applyFilters(scope){
   scope = scope || document;
   var active = {};
-  scope.querySelectorAll('.filter-cb').forEach(function(cb){ active[cb.dataset.cat] = cb.checked; });
+  scope.querySelectorAll('.filter-badge').forEach(function(b){ active[b.dataset.cat] = b.dataset.active === 'true'; });
   scope.querySelectorAll('.card').forEach(function(card){
     var cat = card.dataset.cat;
     card.style.display = active[cat] ? '' : 'none';
@@ -1477,6 +1491,12 @@ function applyFilters(scope){
     var anyVisible = Array.prototype.some.call(zone.querySelectorAll('.card'), function(c){ return c.style.display !== 'none'; });
     zone.style.display = anyVisible ? '' : 'none';
   });
+}
+
+function toggleFilter(el){
+  var isActive = el.dataset.active === 'true';
+  el.dataset.active = isActive ? 'false' : 'true';
+  applyFilters(el.closest('.child-panel') || document);
 }
 
   function showChild(who){
